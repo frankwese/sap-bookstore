@@ -21,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -57,10 +57,10 @@ jobs:
       cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -97,13 +97,13 @@ jobs:
       - name: Login to Cloud Foundry
         run: cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORG" -s "$CF_SPACE"
         env:
-          # Repository secrets shared by all environments.
-          CF_API: ${{ secrets.CF_API }}
+          # Repository/environment variables, not secrets, so app routes are not masked in logs.
+          CF_API: ${{ vars.CF_API }}
+          CF_ORG: ${{ vars.CF_ORG }}
+          CF_SPACE: ${{ vars.CF_SPACE }}
+          # Credentials stay secret.
           CF_USERNAME: ${{ secrets.CF_USERNAME }}
           CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-          CF_ORG: ${{ secrets.CF_ORG }}
-          # Environment secret from the selected GitHub Environment: dev or prod.
-          CF_SPACE: ${{ secrets.CF_SPACE }}
 
       - name: Deploy
         id: deploy
@@ -145,7 +145,7 @@ jobs:
 
       - name: Upload MTA operation logs
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: mta-operation-logs-${{ github.run_id }}
           path: |

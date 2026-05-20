@@ -1,5 +1,9 @@
 {
   "_version": "1.28.0",
+  "sap.cloud": {
+    "public": true,
+    "service": "com.sap.capire.bookstore"
+  },
   "sap.app": {
     "id": "bookshop",
     "type": "application",
@@ -11,7 +15,7 @@
     },
     "dataSources": {
       "CatalogService": {
-        "uri": "browse/",
+        "uri": "/odata/v4/browse/",
         "type": "OData",
         "settings": {
           "odataVersion": "4.0"
@@ -28,7 +32,7 @@
         "intent1": {
           "signature": {
             "parameters": {
-              "Books.ID":{
+              "Books.ID": {
                 "renameTo": "ID"
               },
               "Authors.books.ID": {
@@ -131,7 +135,7 @@
   "sap.ui": {
     "technology": "UI5",
     "fullWidth": false,
-    "deviceTypes":{
+    "deviceTypes": {
       "desktop": true,
       "tablet": true,
       "phone": true

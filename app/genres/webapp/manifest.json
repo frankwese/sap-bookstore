@@ -1,5 +1,9 @@
 {
 	"_version": "1.8.0",
+	"sap.cloud": {
+		"public": true,
+		"service": "com.sap.capire.bookstore"
+	},
 	"sap.app": {
 		"id": "genres",
 		"type": "application",
@@ -10,7 +14,7 @@
 		},
 		"dataSources": {
 			"AdminService": {
-				"uri": "admin/",
+				"uri": "/admin/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "4.0"
@@ -28,7 +32,8 @@
 					"action": "display"
 				}
 			}
-		}
+		},
+		"i18n": "i18n/i18n.properties"
 	},
 	"sap.ui5": {
 		"dependencies": {
